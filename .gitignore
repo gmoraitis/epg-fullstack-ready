@@ -1,0 +1,21 @@
+# Εξαρτήσεις και βιβλιοθήκες (κατεβαίνουν αυτόματα με npm install)
+node_modules/
+*/node_modules/
+
+# Μεγάλα αρχεία δεδομένων και προσωρινή μνήμη
+*.xml
+epg.xml
+backend/cache*.json
+
+# Περιβάλλον και κλειδιά ασφαλείας
+.env
+.env.local
+
+# Αρχεία build
+dist/
+dist-ssr/
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*

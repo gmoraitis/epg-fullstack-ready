@@ -1,4 +1,4 @@
-EPG Fullstack Ready
+EPG Fullstack Ready - Demo Project for study javascript
 ===================
 
 Quickstart (local):

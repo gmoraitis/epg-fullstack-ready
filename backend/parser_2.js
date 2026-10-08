@@ -6,17 +6,21 @@ import { parseStringPromise } from 'xml2js';
 
 // helper function for dates
 function fixedDate(dateString) {
-    const year = dateString.slice(0, 4);
-    const month = dateString.slice(4, 6);
-    const day = dateString.slice(6, 8);
-    const hour = dateString.slice(8, 10);
-    const minute = dateString.slice(10, 12);
-    const second = dateString.slice(12, 14);
-    return `${year}-${month}-${day}T${hour}:${minute}:${second}+03:00`;
+  // 🛡️ Ο ΦΡΟΥΡΟΣ: Αν το dateString είναι άδειο ή δεν είναι κείμενο, σταμάτα εδώ!
+  if (!dateString || typeof dateString !== 'string') {
+    return '';
+  }
+  const year = dateString.slice(0, 4);
+  const month = dateString.slice(4, 6);
+  const day = dateString.slice(6, 8);
+  const hour = dateString.slice(8, 10);
+  const minute = dateString.slice(10, 12);
+  const second = dateString.slice(12, 14);
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}+03:00`;
 }
 
 const xml_data =
-    `<tv generator-info-name="epg-greece-cyprus" generator-info-url="https://github.com/tvappshq/epg-greece-cyprus">
+  `<tv generator-info-name="epg-greece-cyprus" generator-info-url="https://github.com/tvappshq/epg-greece-cyprus">
     < channel id = "4e" >
         <display-name>4e</display-name>
   </channel >
@@ -45,41 +49,48 @@ const xml_data =
   </tv>`
 
 export async function parseXmltv(xmlString) {
-    const result = await parseStringPromise(xmlString)
-    console.log('data in json object', JSON.stringify(result, null, 2))
+  const result = await parseStringPromise(xmlString)
 
-    // convert object to normal object
-    const rawChannels = result.tv.channel;
-    const rawProgrammes = result.tv.programme
-    const cleanChannels = [];
-    const cleanProgrammes = [];
+  // convert object to normal object
+  const rawChannels = result.tv.channel;
+  const rawProgrammes = result.tv.programme
+  const cleanChannels = [];
+  const cleanProgrammes = [];
 
 
-    for (const ch of rawChannels) {
-        cleanChannels.push(
-            {
-                id: ch.$.id,
-                name: ch['display-name'][0]
-            }
+  for (const ch of rawChannels) {
+    cleanChannels.push(
+      {
+        id: ch.$.id,
+        name: ch['display-name'][0]
+      }
 
-        )
-    }
+    )
+  }
 
-    for (const pr of rawProgrammes) {
-        cleanProgrammes.push({
-            id:`${fixedDate(pr.$.start)}_${pr.$.channel}`,
-            start: fixedDate(pr.$.start),
-            stop: fixedDate(pr.$.stop),
-            channel: pr.$.channel.toLowerCase().split('.')[0],
-            title: pr['title'][0],
-            desc: pr['desc'][0]
-        }
-        )
-    }
-    return {
-      channels:cleanChannels,
-      events:cleanProgrammes
-    }
+  for (const pr of rawProgrammes) {
+    // Παίρνουμε με ασφάλεια τα πεδία (είτε υπάρχουν στο $, είτε απευθείας)
+    const rawStart = pr.$ ? pr.$.start : pr.start;
+    const rawStop = pr.$ ? pr.$.stop : pr.stop;
+    const rawChannel = pr.$ ? pr.$.channel : pr.channel;
+
+    const cleanChannel = rawChannel ? rawChannel.toLowerCase().split('.')[0] : 'unknown';
+    const cleanStart = fixedDate(rawStart);
+    const cleanStop = fixedDate(rawStop);
+
+    cleanProgrammes.push({
+      id: `${cleanStart}_${rawChannel || 'nochannel'}`,
+      start: cleanStart,
+      stop: cleanStop,
+      channel: cleanChannel,
+      title: pr.title ? (Array.isArray(pr.title) ? pr.title[0] : pr.title) : '',
+      desc: pr.desc ? (Array.isArray(pr.desc) ? pr.desc[0] : pr.desc) : ''
+    });
+  }
+  return {
+    channels: cleanChannels,
+    events: cleanProgrammes
+  }
 
 }
 
@@ -87,11 +98,11 @@ export async function parseXmltv(xmlString) {
 // TEST: Calling the function with the xml_data. This part will be run 
 // from the server_2.js, but here is temporaly a test
 
-async function test(){
+async function test() {
   const cleanData = await parseXmltv(xml_data);
 
   console.log("=== The object that returns from parser_2");
   console.log(cleanData);
 }
 
-test();
+//test();

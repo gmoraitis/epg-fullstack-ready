@@ -3,7 +3,7 @@ import { parseXmltv } from "./parser_2.js";
 import fs from 'fs';
 import cron from 'node-cron';
 
-async function fetchAndCache() {
+export async function fetchAndCache() {
 
     console.log("1. Downloading begins...");
     const response = await axios.get('https://ext.greektv.app/epg/epg.xml');

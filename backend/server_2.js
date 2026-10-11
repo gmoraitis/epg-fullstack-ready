@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { loadCache } from './test_fetch.js';
+import { loadCache, fetchAndCache } from './test_fetch.js';
 
 const app = express(); // We create the express app
 const PORT = 4000; // We define the 'door'
@@ -52,6 +52,17 @@ app.get('/api/program/:id', async (req, res) => {
     res.json(foundProgram);
 }
 );
+
+// Χειροκίνητη ανανέωση από το Internet
+app.get('/api/refresh', async (req, res) => {
+    const data = await fetchAndCache();
+    res.json({
+        status: "ok",
+        message: "Το πρόγραμμα ανανεώθηκε!",
+        totalEvents: data.events.length
+    });
+});
+
 
 
 // We say to server to listen to this port

@@ -1,5 +1,7 @@
-
 import { parseStringPromise } from 'xml2js';
+
+import { CHANNELS as masterChannels } from './channels.js'
+
 
 // { } = OBJECT (Αντικείμενο με κλειδιά) ──► Μπαίνεις με ΤΕΛΕΙΑ: .key
 // [ ] = ARRAY (Λίστα με σειριακά νούμερα) ─► Μπαίνεις με ΑΓΚΥΛΗ: [0], [1]
@@ -48,6 +50,9 @@ const xml_data =
   </programme>
   </tv>`
 
+const allowedChannelIds = new Set(masterChannels.map(c => c.api));
+// Περιέχει: 'ert1', 'ert2', 'ert3', 'mega', 'ant1', 'star', 'open', 'alpha', 'skai'
+
 export async function parseXmltv(xmlString) {
   const result = await parseStringPromise(xmlString)
 
@@ -59,13 +64,19 @@ export async function parseXmltv(xmlString) {
 
 
   for (const ch of rawChannels) {
-    cleanChannels.push(
-      {
-        id: ch.$.id,
-        name: ch['display-name'][0]
-      }
+    const cleanId = ch.$.id ? ch.$.id.toLowerCase().split('.')[0]
+      : '';
 
-    )
+    // Κρατα μονο εαν ειναι ενα απο τα 9!
+    if (allowedChannelIds.has(cleanId)) {
+      cleanChannels.push(
+        {
+          id: ch.$.id,
+          name: ch['display-name'][0]
+        }
+
+      )
+    }
   }
 
   for (const pr of rawProgrammes) {
@@ -75,6 +86,11 @@ export async function parseXmltv(xmlString) {
     const rawChannel = pr.$ ? pr.$.channel : pr.channel;
 
     const cleanChannel = rawChannel ? rawChannel.toLowerCase().split('.')[0] : 'unknown';
+
+    // Αν το κανάλι ΔΕΝ ανήκει στα 9, προσπέρασέ το (continue)!
+    if (!allowedChannelIds.has(cleanChannel)) {
+      continue;
+    }
     const cleanStart = fixedDate(rawStart);
     const cleanStop = fixedDate(rawStop);
 

@@ -23,7 +23,7 @@ async function fetchAndCache() {
     return (cleanData)
 }
 
-async function loadCache() {
+export async function loadCache() {
     if (fs.existsSync('cache_2.json')) {
         let cache_2 = fs.readFileSync('cache_2.json', "utf-8");
         let cacheToJosn = JSON.parse(cache_2);
@@ -35,7 +35,7 @@ async function loadCache() {
 
 };
 
-loadCache();
+//loadCache();
 
 
 // "Στο λεπτό 0, κάθε 6 ώρες (* / 6), κάθε μέρα"

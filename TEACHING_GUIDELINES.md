@@ -52,8 +52,19 @@
 
 ### 7. Το Curriculum των 5 Κεφαλαίων
 * **📘 ΚΕΦΑΛΑΙΟ 1:** Data Parsing & Transformation (XML to Clean JSON, Date Normalizer, Unique IDs, Modules) ✅
-* **📘 ΚΕΦΑΛΑΙΟ 2:** Data Fetching, Caching & Αυτοματισμοί (Axios, FileSystem fs, node-cron) ⏳
-* **📘 ΚΕΦΑΛΑΙΟ 3:** Ο Σερβιτόρος (Express.js REST API, Routing, Query Filtering, CORS)
-* **📘 ΚΕΦΑΛΑΙΟ 4:** Frontend Foundation (React, Vite, TailwindCSS, State Management, API Fetching)
+* **📘 ΚΕΦΑΛΑΙΟ 2:** Data Fetching, Caching & Αυτοματισμοί (Axios, FileSystem fs, Filtering, Channel Optimization) ✅
+* **📘 ΚΕΦΑΛΑΙΟ 3:** Ο Σερβιτόρος (Express.js REST API, Routing, Query Filtering, CORS, Git Squash Workflow) ✅
+* **📘 ΚΕΦΑΛΑΙΟ 4:** Frontend Foundation (React, Vite, TailwindCSS, State Management, API Fetching, Circuit Flow) ⏳
 * **📘 ΚΕΦΑΛΑΙΟ 5:** The Master UI & Time-to-Pixel Model (2D Grid, Ruler Coordinates, Timeline, Modals, Overlaps, Live Now Line)
+
+### 8. Ο Κανόνας της Μηχανιστικής Ανάλυσης (Το "Τσιπάκι" και η "Κλωστή")
+* **Κανένα Hand-waving:** Δεν λέμε απλώς "έτσι δουλεύει η React". Εξηγούμε τον **εσωτερικό μηχανισμό κάτω από το καπό** (under the hood mechanics).
+* **Η Ανατομία του Κυκλώματος:** Αναλύουμε πώς κινείται το "ρεύμα/κλωστή" (κλικ -> συνάρτηση -> state setter -> re-render -> dependency array -> effect -> DOM paint).
+* **Πλήρης Αποδόμηση πριν από Νέο Κώδικα:** Δεν προχωράμε σε νέα υλοποίηση αν πρώτα δεν απαντηθεί κάθε απορία του Γιώργου μέχρι το κόκαλο.
+* **Αποτύπωση στο Βιβλίο:** Κάθε τέτοια συζήτηση και αναλογία καταγράφεται αυτούσια στο αντίστοιχο `BOOK_CHAPTER_X.md`.
+
+### 9. Ο Κανόνας της Απομονωμένης Σύνταξης (Sandbox / Toy Example First)
+* **Απαγόρευση Άμεσης Εισαγωγής Συντακτικών Εργαλείων στο Μεγάλο Αρχείο:** Πριν χρησιμοποιηθεί οποιοδήποτε συντακτικό εργαλείο της JS/React (π.χ. `.map()`, `useEffect`, Destructuring, Ternary) στον τελικό κώδικα του EPG, **πρέπει υποχρεωτικά να προηγείται ένα αυτόνομο μίνι-μάθημα με ένα Minimal Toy Example (με απλά δεδομένα όπως φρούτα, νούμερα κτλ.)**.
+* **Ανατομία Σύνταξης & Λέξη-προς-Λέξη Επεξήγηση:** Εξηγούμε τι παίρνει στην είσοδο, γιατί μπαίνει callback συνάρτηση, τι βγάζει στην έξοδο, και ποιος την καλεί.
+* **Μόνο αφού κατακτηθεί το Toy Example, μεταφέρουμε τη γνώση στην εφαρμογή EPG.**
 

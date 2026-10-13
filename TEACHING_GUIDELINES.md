@@ -50,12 +50,15 @@
   - Τον τελικό καθαρό κώδικα
   - Χωρίς LaTeX rendering errors (καθαρά code blocks).
 
-### 7. Το Curriculum των 5 Κεφαλαίων
+### 7. Το Master Curriculum των 8 Κεφαλαίων (Modular Architecture)
 * **📘 ΚΕΦΑΛΑΙΟ 1:** Data Parsing & Transformation (XML to Clean JSON, Date Normalizer, Unique IDs, Modules) ✅
 * **📘 ΚΕΦΑΛΑΙΟ 2:** Data Fetching, Caching & Αυτοματισμοί (Axios, FileSystem fs, Filtering, Channel Optimization) ✅
 * **📘 ΚΕΦΑΛΑΙΟ 3:** Ο Σερβιτόρος (Express.js REST API, Routing, Query Filtering, CORS, Git Squash Workflow) ✅
-* **📘 ΚΕΦΑΛΑΙΟ 4:** Frontend Foundation (React, Vite, TailwindCSS, State Management, API Fetching, Circuit Flow) ⏳
-* **📘 ΚΕΦΑΛΑΙΟ 5:** The Master UI & Time-to-Pixel Model (2D Grid, Ruler Coordinates, Timeline, Modals, Overlaps, Live Now Line)
+* **📘 ΚΕΦΑΛΑΙΟ 4:** Frontend Foundation (React, Vite, TailwindCSS, State Management, API Fetching, Circuit Flow) ✅
+* **📘 ΚΕΦΑΛΑΙΟ 5:** Ο Χάρακας του Χρόνου & Το 2D Grid (Time-to-Pixel Model, Timeline 15min, Math Timezone, Absolute CSS Positioning) ⏳
+* **📘 ΚΕΦΑΛΑΙΟ 6:** Real-Time Dynamics (The Live "Now" Line, Auto-Scroll to Current Time, Collisions & Overlaps)
+* **📘 ΚΕΦΑΛΑΙΟ 7:** Interactive Modals, Rich Media & UX Polish (Channel Filtering Drawer, Info Modal, Movie Posters, External APIs)
+* **📘 ΚΕΦΑΛΑΙΟ 8:** Production Deployment, Monetization & Extensions (Email Digest, Ads Architecture, Performance Auditing, Docker/Vercel)
 
 ### 8. Ο Κανόνας της Μηχανιστικής Ανάλυσης (Το "Τσιπάκι" και η "Κλωστή")
 * **Κανένα Hand-waving:** Δεν λέμε απλώς "έτσι δουλεύει η React". Εξηγούμε τον **εσωτερικό μηχανισμό κάτω από το καπό** (under the hood mechanics).
@@ -67,4 +70,23 @@
 * **Απαγόρευση Άμεσης Εισαγωγής Συντακτικών Εργαλείων στο Μεγάλο Αρχείο:** Πριν χρησιμοποιηθεί οποιοδήποτε συντακτικό εργαλείο της JS/React (π.χ. `.map()`, `useEffect`, Destructuring, Ternary) στον τελικό κώδικα του EPG, **πρέπει υποχρεωτικά να προηγείται ένα αυτόνομο μίνι-μάθημα με ένα Minimal Toy Example (με απλά δεδομένα όπως φρούτα, νούμερα κτλ.)**.
 * **Ανατομία Σύνταξης & Λέξη-προς-Λέξη Επεξήγηση:** Εξηγούμε τι παίρνει στην είσοδο, γιατί μπαίνει callback συνάρτηση, τι βγάζει στην έξοδο, και ποιος την καλεί.
 * **Μόνο αφού κατακτηθεί το Toy Example, μεταφέρουμε τη γνώση στην εφαρμογή EPG.**
+
+### 10. Ο Κανόνας των Σωρευτικών Ασκήσεων Κατανόησης (Cumulative Hunter-Style Method)
+* **Στο τέλος κάθε κεφαλαίου** περιλαμβάνονται υποχρεωτικά **3 έως 5 προοδευτικές ασκήσεις/ερωτήσεις κατανόησης**.
+* **Σωρευτική Δόμηση (Cumulative Spiral):** Κάθε άσκηση δεν ελέγχει μόνο το τρέχον κεφάλαιο, αλλά βασίζεται και χτίζει πάνω στις γνώσεις των προηγούμενων κεφαλαίων (όπως στα Διακριτά Μαθηματικά του Hunter).
+* **Ποικιλία Μορφής:** 
+  1. Ερωτήσεις πολλαπλής επιλογής με αιτιολόγηση ("Γιατί το Β είναι λάθος;").
+  2. Μικρά σενάρια αποσφαλμάτωσης ("Βρες το bug στο παρακάτω snippet").
+  3. Μικρή συγγραφή κώδικα σε πραγματικό πρόβλημα.
+
+### 11. Ο Κανόνας της Προληπτικής Μικρο-Ανατομίας (The "Unknown Unknowns" Rule)
+* **Ο Δάσκαλος δεν περιμένει να κολλήσει ο μαθητής:** Εξηγούμε ΠΡΟΛΗΠΤΙΚΑ ακόμα και τα φαινομενικά "αυτονόητα" συντακτικά μοτίβα (π.χ. Array Destructuring `const [x, setX]`, Object Destructuring, Arrow return shortcuts).
+* **Καμία συντακτική "μαγεία":** Αν μια γραμμή έχει παράξενη σύνταξη (όπως οι αγκύλες `[ ]` στα αριστερά του `=` στο `useState`), εξηγείται αμέσως μηχανικά τι σημαίνει στην απλή JavaScript.
+
+---
+
+## 🔮 ΤΟ ΜΕΛΛΟΝΤΙΚΟ ROADMAP ΓΙΑ ΤΟ ΕΠΙΠΕΔΟ ENTERPRISE / JUNIOR+ FULLSTACK
+1. **Τελικό Migration σε TypeScript (Strict TSX/TS):** Μετατροπή όλου του project σε TypeScript με Interfaces, Generics, Type Guards.
+2. **Database & Authentication Scale:** Προσθήκη PostgreSQL/MongoDB με Prisma/Mongoose, JWT Authentication (Login/Register), Αγαπημένα Κανάλια, Watchlist.
+3. **Ενσωμάτωση Προσωπικών Σημειώσεων Γιώργου:** Προσθήκη των σημειώσεων (HTML/CSS/JS/React) ως Προαπαιτούμενα Θεμέλια (Prerequisites) πριν τα κεφάλαια για την ΤΕΛΙΚΗ ΒΙΒΛΟ.
 

@@ -6,7 +6,7 @@ export default function EPGCalendar_2({ apiBase = 'http://localhost:4000' }) {
     const [channels, setChannels] = useState([]);
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
+
     // 2. Συνάρτηση αλλαγής ημέρας
     function changeDay(offset) {
         const currentDate = new Date(date);
@@ -25,10 +25,20 @@ export default function EPGCalendar_2({ apiBase = 'http://localhost:4000' }) {
                 setEvents(data.events || []);
                 setIsLoading(false); // 👈 2. Σβήσε το loading, ήρθαν τα δεδομένα!
             })
-            .catch(err => {console.error("Σφάλμα σύνδεσης με το Backend:", err);
-            setIsLoading(false)}); // 👈 3. Σβήσε το loading ακόμα κι αν απέτυχε!
+            .catch(err => {
+                console.error("Σφάλμα σύνδεσης με το Backend:", err);
+                setIsLoading(false)
+            }); // 👈 3. Σβήσε το loading ακόμα κι αν απέτυχε!
 
     }, [date]); // 👈 Τρέχει αυτόματα σε κάθε αλλαγή του date!
+
+    // Υπολογισμός Ελληνικής Ημερομηνίας (Derived Value)
+    const formattedDate = new Intl.DateTimeFormat('el-GR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }).format(new Date(date));
 
     // 4. Η Οθόνη (UI)
     return (
@@ -41,8 +51,9 @@ export default function EPGCalendar_2({ apiBase = 'http://localhost:4000' }) {
                     &lt;
                 </button>
 
-                <span className="text-xl font-semibold bg-gray-800 px-6 py-2 rounded">
-                    {date}
+                <span className="text-xl font-semibold bg-gray-800 px-6 py-2 rounded
+                capitalize">
+                    {formattedDate}
                 </span>
 
                 <button
@@ -58,7 +69,31 @@ export default function EPGCalendar_2({ apiBase = 'http://localhost:4000' }) {
                     ✅ Συνδέθηκε με το Backend!
                 </p>
                 <p>📺 Κανάλια που βρέθηκαν: <span className="font-bold">{channels.length}</span></p>
-                <p>🎬 Εκπομπές για αυτή τη μέρα: <span className="font-bold">{events.length}</span></p>
+                {/* Λίστα Καναλιών & Εκπομπών τους */}
+                <div className="flex flex-col gap-4 mt-6">
+                    {channels.map(channel => {
+                        // 1. Βρίσκουμε τις εκπομπές αυτού του συγκεκριμένου καναλιού
+                        const channelEvents = events.filter(e => e.channel === channel.id);
+
+                        return (
+                            <div key={channel.id} className="bg-gray-700/50 p-4 rounded-lg">
+                                {/* Όνομα Καναλιού */}
+                                <h3 className="text-lg font-bold text-yellow-400 mb-2">
+                                    📺 {channel.name} ({channelEvents.length} εκπομπές)
+                                </h3>
+
+                                {/* Οι πρώτες 3 εκπομπές του */}
+                                <div className="flex flex-col gap-1">
+                                    {channelEvents.slice(0, 3).map(e => (
+                                        <div key={e.id} className="text-sm text-gray-300 bg-gray-800 px-3 py-1.5 rounded">
+                                            🕒 {e.start.slice(11, 16)} - {typeof e.title === 'object'? e.title._ : e.title}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>}
         </div>
 
